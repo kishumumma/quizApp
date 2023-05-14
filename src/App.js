@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
 import './App.css';
+import EndScreen from './components/EndScreen';
+import MainMenu from './components/MainMenu';
+import Quiz from './components/Quiz';
+
+import {QuizContext} from "./Helpers/Context"
 
 function App() {
+
+  const [gamestate,setGameState]=useState("menu");
+  const [score,setScore]=useState(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Quiz App</h1>
+      <QuizContext.Provider value={{gamestate,setGameState ,score,setScore}}>
+      {gamestate==="menu" && <MainMenu/>}
+      {gamestate==="quiz" && <Quiz/>}
+      {gamestate==="endScreen" && <EndScreen/>}
+      </QuizContext.Provider>
     </div>
   );
 }
